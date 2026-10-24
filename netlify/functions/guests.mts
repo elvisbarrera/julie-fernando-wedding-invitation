@@ -93,6 +93,10 @@ h1{font-family:var(--display);font-weight:400;font-size:2.2rem;margin:0;line-hei
 .linkrow{display:flex;gap:8px;flex-wrap:wrap}
 .linkrow input{flex:1 1 200px;min-width:0;font:inherit;font-size:1rem;color:var(--ink);border:0;border-bottom:1px solid var(--sand-deep);background:transparent;padding:8px 2px;border-radius:0}
 .linkrow input:focus{outline:none;border-bottom-color:var(--gold)}
+.langpick{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.langpick .label{margin-right:4px}
+.langpick button{padding:8px 11px;border-color:var(--sand-deep);color:var(--muted)}
+.langpick button[aria-pressed="true"]{border-color:var(--gold);color:var(--gold-lo);background:#FBF4E6}
 .out{font-size:.92rem;color:var(--muted);overflow-wrap:anywhere;user-select:all;min-height:1.4em}
 button{font-family:var(--label);letter-spacing:.2em;text-transform:uppercase;font-size:.7rem;cursor:pointer;padding:11px 14px;border:1px solid var(--gold);background:var(--paper);color:var(--gold-lo);-webkit-tap-highlight-color:transparent}
 button:hover{background:#FBF4E6}
@@ -147,6 +151,7 @@ footer{text-align:center}
   <h2>Personal invitation link</h2>
   <div class="label">Type a guest’s name to get their link</div>
   <div class="linkrow"><input id="gname" type="text" placeholder="e.g. Ana &amp; Pedro" autocomplete="off"><button type="button" class="primary" id="copy">Copy link</button></div>
+  <div class="langpick" role="group" aria-label="Invitation language"><span class="label">Language</span><button type="button" data-l="en" aria-pressed="true">English</button><button type="button" data-l="pt" aria-pressed="false">Português</button></div>
   <div class="out" id="glink"></div>
 </section>
 
@@ -174,7 +179,11 @@ document.querySelectorAll('.tabs button').forEach(function(b){
     document.querySelectorAll('.g').forEach(function(g){g.hidden=!(f==='all'||g.dataset.state===f)});
   };
 });
-function linkFor(n){return location.origin+'/?to='+encodeURIComponent(n.trim())}
+var glang='en';
+function linkFor(n){return location.origin+'/?to='+encodeURIComponent(n.trim())+(glang==='pt'?'&lang=pt':'')}
+document.querySelectorAll('.langpick button').forEach(function(b){b.onclick=function(){glang=b.dataset.l;
+  document.querySelectorAll('.langpick button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+  var n=$('gname').value.trim();$('glink').textContent=n?linkFor(n):''}});
 $('gname').addEventListener('input',function(){var n=this.value.trim();$('glink').textContent=n?linkFor(n):''});
 $('copy').onclick=function(){
   var n=$('gname').value.trim(); if(!n){$('gname').focus();return}

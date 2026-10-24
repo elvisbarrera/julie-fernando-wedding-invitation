@@ -80,6 +80,12 @@ h1,h2,h3{text-wrap:balance}
 .gate-names{font-family:var(--display);font-size:1.15rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink)}
 
 #dust{position:fixed;inset:0;pointer-events:none;z-index:60}
+.lang{position:fixed;z-index:70;top:calc(14px + env(safe-area-inset-top,0px));right:max(14px,env(safe-area-inset-right,0px));
+  display:flex;align-items:center;gap:2px;padding:4px 6px;background:rgba(255,255,255,.88);border:1px solid var(--hair);
+  font-family:var(--label);font-size:.74rem;letter-spacing:.18em;color:var(--sand-deep)}
+.lang button{font:inherit;letter-spacing:inherit;background:none;border:0;padding:6px 7px;cursor:pointer;color:var(--muted);transition:color .3s var(--ease)}
+.lang button[aria-pressed="true"]{color:var(--gold-lo);text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
+.lang button:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
 
 /* ---------- Invitation ---------- */
 main{max-width:640px;margin:0 auto;padding-block:40px 72px;display:grid;gap:36px}
@@ -118,7 +124,7 @@ body.revealed .hero .names > span:last-child{animation-delay:2s}
 .hero .lede{font-style:italic;color:var(--muted);max-width:30ch;font-size:1.15rem;line-height:1.5;text-wrap:balance;margin:4px 0 0}
 .date{display:flex;align-items:center;gap:18px;font-family:var(--display);color:var(--ink)}
 .date .d{font-size:3.2rem;line-height:1;color:var(--gold-lo)}
-.date .side{font-family:var(--label);letter-spacing:.28em;text-transform:uppercase;font-size:.78rem;border-block:1px solid var(--gold);padding:8px 2px;min-width:96px}
+.date .side{font-family:var(--label);letter-spacing:.28em;text-transform:uppercase;font-size:.78rem;border-block:1px solid var(--gold);padding:8px 2px;min-width:96px;white-space:nowrap}
 .tagline{font-family:var(--display);font-style:italic;font-size:1.05rem;color:var(--gold-lo)}
 .waves{width:100%;max-width:340px;height:34px;display:block}
 .waves{overflow:hidden;clip-path:inset(0 50% 0 50%);transition:clip-path 2.4s cubic-bezier(.6,0,.2,1) 1.6s}
@@ -162,6 +168,7 @@ body.revealed .rv:nth-child(8){transition-delay:1.8s}
 .program > div{padding:22px 0;display:grid;gap:4px}
 .program > div + div{border-top:1px solid var(--hair)}
 .program dt{font-family:var(--label);letter-spacing:.24em;text-transform:uppercase;font-size:.76rem;color:var(--gold-lo)}
+.program dd b{font-weight:400}
 .program dd{margin:0;font-family:var(--display);font-size:1.2rem;line-height:1.35;color:var(--ink);text-wrap:balance}
 .program dd span{display:block;font-family:var(--body);font-style:italic;font-size:.98rem;color:var(--muted);margin-top:4px}
 
@@ -200,6 +207,8 @@ footer .mono{font-family:var(--script);font-size:2.6rem;line-height:1.3;display:
 
 @media (max-width:520px){
   body{font-size:17px}
+  .date{gap:12px}
+  .date .side{font-size:.7rem;letter-spacing:.14em;min-width:0;padding-inline:4px}
   .card{padding:56px 24px}
   .duo{gap:14px}
 }
@@ -213,12 +222,15 @@ footer .mono{font-family:var(--script);font-size:2.6rem;line-height:1.3;display:
 <noscript><style>#gate{display:none}.rv,.hero .names > span,.hero .amp{opacity:1!important;filter:none!important;clip-path:none!important;transform:none!important}.waves{clip-path:none}</style></noscript>
 </head>
 <body>
+<div class="lang" role="group" aria-label="Language / Idioma">
+  <button type="button" data-lang="en" aria-pressed="true">EN</button><span aria-hidden="true">·</span><button type="button" data-lang="pt" aria-pressed="false">PT</button>
+</div>
 <div id="gate" role="button" tabindex="0" aria-label="Open the invitation">
   <div class="door l"><span class="wax"></span></div><div class="door r"><span class="wax"></span></div><div class="flash"></div>
   <div class="gate-center">
     <div class="gate-names">Julie &nbsp;·&nbsp; Fernando</div>
     <div class="seal-space" aria-hidden="true"></div>
-    <div class="gate-hint">Tap to open</div>
+    <div class="gate-hint" data-t="tap">Tap to open</div>
   </div>
 </div>
 <canvas id="dust" aria-hidden="true"></canvas>
@@ -227,14 +239,14 @@ footer .mono{font-family:var(--script);font-size:2.6rem;line-height:1.3;display:
   <section class="card hero">
     <div class="halo" aria-hidden="true"></div>
     <div class="label rv" id="hello" hidden></div>
-    <div class="label rv">Together with their families</div>
+    <div class="label rv" data-t="families">Together with their families</div>
     <h1 class="names rv"><span>Julie</span><span class="amp gold-text">&amp;</span><span>Fernando</span></h1>
-    <p class="lede rv">request the honor of your presence as they say “sim” by the sea</p>
+    <p class="lede rv" data-t="lede">request the honor of your presence as they say “sim” by the sea</p>
     <div class="rule rv"><i></i></div>
     <div class="date rv">
-      <div class="side">Wednesday</div>
+      <div class="side" data-t="weekday">Wednesday</div>
       <div class="d gold-text">15</div>
-      <div class="side">Dec · 2027</div>
+      <div class="side" data-t="month">Dec · 2027</div>
     </div>
     <div class="tagline rv">Do Sul ao Mar · Brasil</div>
     <svg class="waves rv" viewBox="0 0 340 34" aria-hidden="true">
@@ -243,10 +255,10 @@ footer .mono{font-family:var(--script);font-size:2.6rem;line-height:1.3;display:
       <path class="w3" d="M0 28 q21.25 -6 42.5 0 t42.5 0 t42.5 0 t42.5 0 t42.5 0 t42.5 0 t42.5 0 t42.5 0 t42.5 0 t42.5 0"/>
     </svg>
     <div class="count rv" aria-label="Countdown to the wedding">
-      <div><b id="cd-d">—</b><small>Days</small></div>
-      <div><b id="cd-h">—</b><small>Hours</small></div>
-      <div><b id="cd-m">—</b><small>Minutes</small></div>
-      <div><b id="cd-s">—</b><small>Seconds</small></div>
+      <div><b id="cd-d">—</b><small data-t="days">Days</small></div>
+      <div><b id="cd-h">—</b><small data-t="hours">Hours</small></div>
+      <div><b id="cd-m">—</b><small data-t="minutes">Minutes</small></div>
+      <div><b id="cd-s">—</b><small data-t="seconds">Seconds</small></div>
     </div>
   </section>
 
@@ -258,53 +270,53 @@ footer .mono{font-family:var(--script);font-size:2.6rem;line-height:1.3;display:
       <div class="fr"><img src="img/couple-sunny.jpg" alt="Julie and Fernando on a sunny day" style="object-position:50% 20%"></div>
       <div class="fr"><img src="img/couple-travel.jpg" alt="Fernando and Julie traveling" style="object-position:50% 30%"></div>
     </div>
-    <figcaption>From the pampas of the South to the shores of Brasil, two hearts, one horizon.</figcaption>
+    <figcaption data-t="caption">From the pampas of the South to the shores of Brasil, two hearts, one horizon.</figcaption>
   </figure>
 
   <section class="card details">
-    <h2>The celebration</h2>
+    <h2 data-t="celebration">The celebration</h2>
     <div class="rule"><i></i></div>
     <dl class="program">
-      <div><dt>Ceremony</dt><dd>Sunset on the beach<span>Time to be announced</span></dd></div>
-      <div><dt>Reception</dt><dd>Dinner, dancing &amp; churrasco under the stars<span>Following the ceremony</span></dd></div>
-      <div><dt>Location</dt><dd>Beachfront, Brasil<span>Venue to be announced</span></dd></div>
-      <div><dt>Dress code</dt><dd>Beach formal<span>Light linens &amp; sand tones</span></dd></div>
+      <div><dt data-t="ceremony">Ceremony</dt><dd><b data-t="ceremonyV">Sunset on the beach</b><span data-t="ceremonyN">Time to be announced</span></dd></div>
+      <div><dt data-t="reception">Reception</dt><dd><b data-t="receptionV">Dinner, dancing &amp; churrasco under the stars</b><span data-t="receptionN">Following the ceremony</span></dd></div>
+      <div><dt data-t="location">Location</dt><dd><b data-t="locationV">Beachfront, Brasil</b><span data-t="locationN">Venue to be announced</span></dd></div>
+      <div><dt data-t="dress">Dress code</dt><dd><b data-t="dressV">Beach formal</b><span data-t="dressN">Light linens &amp; sand tones</span></dd></div>
     </dl>
   </section>
 
   <section class="card rsvp" id="rsvp">
-    <h2>Will you join us?</h2>
-    <p class="deadline">Kindly reply by September 15, 2027</p>
+    <h2 data-t="join">Will you join us?</h2>
+    <p class="deadline" data-t="deadline">Kindly reply by September 15, 2027</p>
     <form id="form" novalidate>
       <div class="f">
-        <label for="name">Your name</label>
-        <input type="text" id="name" maxlength="80" autocomplete="name" placeholder="First and last name">
+        <label for="name" data-t="yourName">Your name</label>
+        <input type="text" id="name" maxlength="80" autocomplete="name" placeholder="First and last name" data-tp="namePh">
       </div>
       <div class="f">
-        <span class="lab">Attendance</span>
+        <span class="lab" data-t="attendance">Attendance</span>
         <div class="choice" role="radiogroup" aria-label="Attendance">
-          <input type="radio" name="att" id="att-yes" value="yes" checked><label for="att-yes">Joyfully accepts</label>
-          <input type="radio" name="att" id="att-no" value="no"><label for="att-no">Regretfully declines</label>
+          <input type="radio" name="att" id="att-yes" value="yes" checked><label for="att-yes" data-t="accept">Joyfully accepts</label>
+          <input type="radio" name="att" id="att-no" value="no"><label for="att-no" data-t="decline">Regretfully declines</label>
         </div>
       </div>
       <div class="counts" id="counts">
-        <div class="f"><span class="lab">Adults</span>
+        <div class="f"><span class="lab" data-t="adults">Adults</span>
           <div class="step"><button type="button" id="ad-m" aria-label="One fewer adult">−</button><output id="adults">1</output><button type="button" id="ad-p" aria-label="One more adult">+</button></div></div>
-        <div class="f"><span class="lab">Children</span>
+        <div class="f"><span class="lab" data-t="children">Children</span>
           <div class="step"><button type="button" id="ki-m" aria-label="One fewer child">−</button><output id="kids">0</output><button type="button" id="ki-p" aria-label="One more child">+</button></div></div>
       </div>
       <div class="f">
-        <label for="msg">A note for the couple (optional)</label>
-        <textarea id="msg" maxlength="400" placeholder="Dietary needs, well wishes…"></textarea>
+        <label for="msg" data-t="note">A note for the couple (optional)</label>
+        <textarea id="msg" maxlength="400" placeholder="Dietary needs, well wishes…" data-tp="notePh"></textarea>
       </div>
       <div style="position:absolute;left:-9999px" aria-hidden="true"><label for="website">Website</label><input type="text" id="website" tabindex="-1" autocomplete="off"></div>
       <p class="err" id="err" role="alert"></p>
-      <button class="btn" type="submit" id="send">Send my reply</button>
+      <button class="btn" type="submit" id="send" data-t="send">Send my reply</button>
     </form>
     <div class="thanks" id="thanks" hidden>
       <div class="big">Obrigado</div>
       <p id="thanks-msg"></p>
-      <button class="link" type="button" id="edit">Change my reply</button>
+      <button class="link" type="button" id="edit" data-t="change">Change my reply</button>
     </div>
   </section>
 
@@ -318,6 +330,67 @@ footer .mono{font-family:var(--script);font-size:2.6rem;line-height:1.3;display:
 (function(){
   const WEDDING = new Date("2027-12-15T17:00:00-03:00"); // placeholder: sunset, Brasília time
   const $ = id => document.getElementById(id);
+
+  /* ---------- language: EN / PT ---------- */
+  const I18N = {
+    en:{ tap:'Tap to open', families:'Together with their families',
+      lede:'request the honor of your presence as they say “sim” by the sea', weekday:'Wednesday', month:'Dec · 2027',
+      days:'Days', hours:'Hours', minutes:'Minutes', seconds:'Seconds',
+      caption:'From the pampas of the South to the shores of Brasil, two hearts, one horizon.',
+      celebration:'The celebration', ceremony:'Ceremony', ceremonyV:'Sunset on the beach', ceremonyN:'Time to be announced',
+      reception:'Reception', receptionV:'Dinner, dancing & churrasco under the stars', receptionN:'Following the ceremony',
+      location:'Location', locationV:'Beachfront, Brasil', locationN:'Venue to be announced',
+      dress:'Dress code', dressV:'Beach formal', dressN:'Light linens & sand tones',
+      join:'Will you join us?', deadline:'Kindly reply by September 15, 2027', yourName:'Your name', namePh:'First and last name',
+      attendance:'Attendance', accept:'Joyfully accepts', decline:'Regretfully declines', adults:'Adults', children:'Children',
+      note:'A note for the couple (optional)', notePh:'Dietary needs, well wishes…', send:'Send my reply', sending:'Sending…', change:'Change my reply',
+      hello:n=>'Dear '+n, open:'Open the invitation', friend:'friend',
+      errName:'Please enter your name so the couple knows who is replying.',
+      errSend:'We couldn’t send your reply. Check your connection and try again.',
+      party:(a,k)=>[a+' adult'+(a>1?'s':''), k?k+' child'+(k>1?'ren':''):null].filter(Boolean).join(' & '),
+      yes:(f,p)=>`${f}, we can’t wait to celebrate with you. Reserved for ${p}.`,
+      no:f=>`${f}, you will be missed. Thank you for letting us know.`,
+      title:'Julie & Fernando · December 15, 2027' },
+    pt:{ tap:'Toque para abrir', families:'Juntamente com suas famílias',
+      lede:'têm a honra de convidar você para o seu “sim” à beira-mar', weekday:'Quarta-feira', month:'Dez · 2027',
+      days:'Dias', hours:'Horas', minutes:'Minutos', seconds:'Segundos',
+      caption:'Dos pampas do Sul às praias do Brasil, dois corações, um só horizonte.',
+      celebration:'A celebração', ceremony:'Cerimônia', ceremonyV:'Pôr do sol na praia', ceremonyN:'Horário a confirmar',
+      reception:'Recepção', receptionV:'Jantar, dança e churrasco sob as estrelas', receptionN:'Logo após a cerimônia',
+      location:'Local', locationV:'À beira-mar, Brasil', locationN:'Local a confirmar',
+      dress:'Traje', dressV:'Esporte fino praiano', dressN:'Linho leve e tons de areia',
+      join:'Você vem celebrar conosco?', deadline:'Por favor, confirme até 15 de setembro de 2027', yourName:'Seu nome', namePh:'Nome e sobrenome',
+      attendance:'Presença', accept:'Aceito com alegria', decline:'Infelizmente não poderei', adults:'Adultos', children:'Crianças',
+      note:'Um recado para os noivos (opcional)', notePh:'Restrições alimentares, votos de felicidade…', send:'Enviar resposta', sending:'Enviando…', change:'Alterar minha resposta',
+      hello:n=>'Para '+n, open:'Abrir o convite', friend:'querido(a)',
+      errName:'Por favor, escreva seu nome para os noivos saberem quem está respondendo.',
+      errSend:'Não foi possível enviar sua resposta. Verifique sua conexão e tente novamente.',
+      party:(a,k)=>[a+' adulto'+(a>1?'s':''), k?k+' criança'+(k>1?'s':''):null].filter(Boolean).join(' e '),
+      yes:(f,p)=>`${f}, mal podemos esperar para celebrar com você. Reservado para ${p}.`,
+      no:f=>`${f}, sentiremos sua falta. Obrigado por nos avisar.`,
+      title:'Julie & Fernando · 15 de dezembro de 2027' }
+  };
+  const qs = new URLSearchParams(location.search);
+  let lang = (qs.get('lang')||'').toLowerCase();
+  if(!I18N[lang]){ try{ lang = localStorage.getItem('jf-lang')||''; }catch(e){ lang=''; } }
+  if(!I18N[lang]) lang = /^pt/i.test(navigator.language||'') ? 'pt' : 'en';
+  const t = k => I18N[lang][k];
+  let lastThanks = null;
+  function applyLang(l){
+    lang = l; document.documentElement.lang = l==='pt' ? 'pt-BR' : 'en';
+    document.querySelectorAll('[data-t]').forEach(el=>{ if(el.id==='send' && el.disabled) return; el.textContent = t(el.dataset.t); });
+    document.querySelectorAll('[data-tp]').forEach(el=>{ el.placeholder = t(el.dataset.tp); });
+    document.querySelectorAll('.lang button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.lang===l ? 'true':'false'));
+    $('gate').setAttribute('aria-label', t('open'));
+    if(toName){ $('hello').textContent = t('hello')(toName); document.title = toName + ' · Julie & Fernando'; }
+    else document.title = t('title');
+    if(lastThanks) thank(lastThanks);
+    if($('err').textContent) $('err').textContent = '';
+  }
+  const toName = (qs.get('to')||'').trim().slice(0,60);
+  document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click', e=>{
+    e.stopPropagation(); applyLang(b.dataset.lang); try{ localStorage.setItem('jf-lang', b.dataset.lang); }catch(err){}
+  }));
 
   /* ---------- wax crumbs when the seal breaks ---------- */
   const gate = $('gate'), cv = $('dust'), ctx = cv.getContext('2d');
@@ -439,41 +512,33 @@ footer .mono{font-family:var(--script);font-size:2.6rem;line-height:1.3;display:
 
   function thank(data, saved){
     $('form').hidden = true; $('thanks').hidden = false;
-    const first = (data.name||'').split(' ')[0] || 'friend';
-    if(data.attending){
-      const ppl = [data.adults+' adult'+(data.adults>1?'s':''), data.kids?data.kids+' child'+(data.kids>1?'ren':''):null].filter(Boolean).join(' & ');
-      $('thanks-msg').textContent = `${first}, we can’t wait to celebrate with you. Reserved for ${ppl}.`;
-
-    } else {
-      $('thanks-msg').textContent = `${first}, you will be missed. Thank you for letting us know.`;
-    }
+    lastThanks = data;
+    const first = (data.name||'').split(' ')[0] || t('friend');
+    $('thanks-msg').textContent = data.attending ? t('yes')(first, t('party')(data.adults, data.kids)) : t('no')(first);
   }
-  $('edit').onclick = ()=>{ $('thanks').hidden = true; $('form').hidden = false; };
+  $('edit').onclick = ()=>{ lastThanks = null; $('thanks').hidden = true; $('form').hidden = false; };
 
   $('form').addEventListener('submit', async e=>{
     e.preventDefault();
     const name = $('name').value.trim();
-    if(name.length < 2){ $('err').textContent = 'Please enter your name so the couple knows who is replying.'; $('name').focus(); return; }
+    if(name.length < 2){ $('err').textContent = t('errName'); $('name').focus(); return; }
     $('err').textContent = '';
     const data = { name, attending: attending(), adults: attending()?adults:0, kids: attending()?kids:0,
       note: $('msg').value.trim(), at: new Date().toISOString() };
-    $('send').disabled = true; $('send').textContent = 'Sending…';
+    $('send').disabled = true; $('send').textContent = t('sending');
     try{
       const res = await fetch('/api/rsvp',{method:'POST',headers:{'content-type':'application/json'},
         body:JSON.stringify({...data, website:$('website').value})});
       if(!res.ok) throw new Error((await res.json().catch(()=>({}))).error || 'failed');
       thank(data);
     }catch(err){
-      $('err').textContent = 'We couldn’t send your reply. Check your connection and try again.';
-    }finally{ $('send').disabled = false; $('send').textContent = 'Send my reply'; }
+      $('err').textContent = t('errSend');
+    }finally{ $('send').disabled = false; $('send').textContent = t('send'); }
   });
 
   /* ---------- personalized link: ?to=Name ---------- */
-  const to = (new URLSearchParams(location.search).get('to')||'').trim().slice(0,60);
-  if(to){
-    $('hello').textContent = 'Dear ' + to; $('hello').hidden = false;
-    $('name').value = to; document.title = to + ' · Julie & Fernando';
-  }
+  if(toName){ $('hello').hidden = false; $('name').value = toName; }
+  applyLang(lang);
 })();
 </script>
 
