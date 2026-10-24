@@ -64,7 +64,7 @@ export default async (req: Request) => {
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&family=Pinyon+Script&family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
-:root{--linen:#FBF8F2;--paper:#fff;--sand:#E9DFCC;--sand-deep:#CDBB9A;--ink:#3B342A;--muted:#857A68;--gold:#B08D57;--gold-hi:#D9BC82;--gold-lo:#8C6B3A;
+:root{--linen:#FBF8F2;--paper:#fff;--sand:#E9DFCC;--sand-deep:#CDBB9A;--ink:#3B342A;--muted:#6B6150;--gold:#B08D57;--gold-hi:#D9BC82;--gold-lo:#8C6B3A;
 --display:"Bodoni Moda",Didot,Georgia,serif;--script:"Pinyon Script","Snell Roundhand",cursive;--label:"Marcellus",Georgia,serif;--body:"EB Garamond",Garamond,Georgia,serif}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--linen)}
@@ -104,8 +104,8 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-o
 .tabs button{padding:8px 11px;border-color:var(--sand-deep);color:var(--muted)}
 .tabs button[aria-pressed="true"]{border-color:var(--gold);color:var(--gold-lo);background:#FBF4E6}
 .list{display:grid;gap:10px}
-.g{background:var(--paper);border:1px solid var(--sand);border-left:3px solid var(--gold);padding:14px 16px}
-.g.out{border-left-color:var(--sand-deep)}
+.g{background:var(--paper);border:1px solid var(--sand);padding:14px 16px}
+.g.out{background:#FCFAF6}
 .gh{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .who{min-width:0}
 .who h3{font-family:var(--display);font-weight:400;font-size:1.3rem;margin:0;line-height:1.2;overflow-wrap:anywhere}
